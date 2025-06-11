@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Ativar MFA{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-md text-center">
+    <h2 class="text-2xl font-semibold mb-6">Configurar autenticação em dois fatores</h2>
+
+    <p class="mb-4">Escaneie o QR code abaixo com o app <strong>Microsoft Authenticator</strong>:</p>
+
+    <div class="mb-6">
+      {{ wizard.qr_code|safe }}
+    </div>
+
+    <p class="mb-4">Depois, digite o código de 6 dígitos gerado no app:</p>
+
+    <form method="post" action="" class="space-y-4">
+      {% csrf_token %}
+      {{ wizard.management_form }}
+      {{ wizard.form.as_p }}
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md">
+        Ativar MFA
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

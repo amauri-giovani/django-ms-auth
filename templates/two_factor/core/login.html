@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Login com MFA{% endblock %}
+
+{% block content %}
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+      <h2 class="text-2xl font-semibold text-center mb-6">Login com MFA</h2>
+
+      {% if wizard.form.errors %}
+        <div class="text-red-600 text-sm text-center mb-4">
+          Usuário ou senha inválidos.
+        </div>
+      {% endif %}
+
+      <form method="post" action="?next={{ request.GET.next }}" class="space-y-4">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {{ wizard.form.as_p }}
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md">
+          Entrar
+        </button>
+      </form>
+      <a href="{% url 'two_factor:profile' %}"
+         class="block text-center text-sm text-blue-600 hover:underline mt-4">
+        Ver dispositivos de autenticação
+      </a>
+
+    </div>
+  </div>
+{% endblock %}
